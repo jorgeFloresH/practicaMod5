@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    volumes:
+      - .:/code
+      - ./db.sqlite3:/db.sqlite3
+web_migrate:
+    extends:
+      service: web
+    command: python manage.py migrate    
+web_run:
+    extends:
+      service: web
+    command: python manage.py runserver 0.0.0.0:8001
+    ports:
+      - "8001:8001"
